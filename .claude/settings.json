@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$j = [Console]::In.ReadToEnd() | ConvertFrom-Json; if ($j.message -match 'continuemos') { echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"RECORDATORIO AUTOMATICO: El usuario escribio continuemos. ANTES de responder DEBES leer el archivo CLAUDE.md del proyecto para conocer el estado actual, y ejecutar git log --oneline -5. Luego continua trabajando directamente sin pedir contexto adicional.\"}}'  }"
+          }
+        ]
+      },
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "shell": "powershell",
+            "command": "$j = [Console]::In.ReadToEnd() | ConvertFrom-Json; if ($j.message -match 'actualiza') { echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"RECORDATORIO AUTOMATICO: El usuario escribio actualiza. DEBES hacer estas dos cosas: 1) Actualizar la seccion Estado actual en CLAUDE.md con un resumen de los cambios hechos en esta sesion (fecha, que se cambio, que falta). 2) Ejecutar git add CLAUDE.md seguido de git commit y git push origin master para subir a GitHub.\"}}'  }"
+          }
+        ]
+      }
+    ]
+  }
+}

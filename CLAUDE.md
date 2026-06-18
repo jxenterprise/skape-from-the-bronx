@@ -1,28 +1,65 @@
 # SKAPE FROM THE BRONX — Contexto del proyecto
 
+## PALABRAS CLAVE (leer siempre)
+
+| Palabra     | Qué hace Claude automáticamente |
+|-------------|----------------------------------|
+| `continuemos` | Lee este CLAUDE.md + `git log --oneline -5` y continúa el trabajo sin pedir contexto |
+| `actualiza`   | Actualiza la sección **Estado actual** (abajo) con los cambios de la sesión + `git push` |
+
+---
+
+## Estado actual
+
+**Última actualización:** 2026-06-18
+
+**Qué se hizo hoy:**
+- Reorganización completa del proyecto: de un único HTML a estructura multi-archivo
+- Creado `index.html` (solo HTML), `css/styles.css`, `js/main.js`, `img/` (vacía)
+- Inicializado repositorio Git (commit inicial hecho)
+- Configurados hooks de palabras clave (`continuemos` / `actualiza`) en `.claude/settings.json`
+
+**Qué falta por hacer:**
+- Conectar repo local a GitHub (el usuario aún no ha creado el repo en GitHub)
+- Agregar número real de WhatsApp en `js/main.js` → `const WHATSAPP = "0000000000"`
+- Subir fotos reales de productos (carpeta `img/`)
+- Agregar links reales de Instagram y TikTok en el footer de `index.html`
+- (Opcional) Reemplazar logo SVG generado por logo real de la marca
+
+**Próximo paso acordado:**
+Esperar que el usuario cree el repo en GitHub y pase la URL para hacer el push.
+
+---
+
 ## Qué es este proyecto
 
 Catálogo de e-commerce de streetwear y cultura del básquet, inspirado en el Bronx (NYC).
-**Un solo archivo HTML** (`skape-from-the-bronx (1).html`) — sin frameworks, sin build system, sin dependencias externas excepto Google Fonts.
+**Estructura multi-archivo** separada en `index.html` + `css/styles.css` + `js/main.js`. Sin frameworks, sin build system, sin dependencias locales (solo Google Fonts externo). Abre `index.html` en el navegador directamente.
 
-El archivo contiene todo: HTML + CSS + JS en un único documento. Funciona abriéndolo en el navegador directamente.
-
-## Arquitectura del archivo
+## Arquitectura del proyecto
 
 ```
-skape-from-the-bronx (1).html
-├── <head>        — meta, Google Fonts (Archivo, Oswald, Hanken Grotesk)
-├── <style>       — todo el CSS con variables CSS
-├── <body>
-│   ├── NAV       — sticky, blur backdrop, menú móvil
-│   ├── HERO      — emblema SVG animado con efecto specular en cursor
-│   ├── #catalogo — grid filtrable de productos
-│   ├── #marca    — pillares de la marca (4 bloques)
-│   ├── #contacto / footer — links sociales, horario
-│   ├── .wa-float — botón flotante WhatsApp
-│   └── #cart     — drawer carrito (slide desde la derecha)
-└── <script>      — toda la lógica JS
+skape-from-the-bronx/
+├── index.html          — HTML (estructura, secciones, componentes)
+├── css/
+│   └── styles.css      — Todo el CSS + variables CSS + breakpoints
+├── js/
+│   └── main.js         — PRODUCTS array, carrito, lógica, emblema SVG
+├── img/                — Carpeta para fotos de productos (vacía aún)
+├── .claude/
+│   └── settings.json   — Hooks de palabras clave (continuemos / actualiza)
+├── .gitignore
+└── CLAUDE.md           — Este archivo
 ```
+
+**Secciones en index.html:**
+- `<header class="nav">` — sticky, blur backdrop, menú móvil
+- `<section class="hero">` — emblema SVG animado con efecto specular en cursor
+- `<section id="catalogo">` — grid filtrable de productos
+- `<section id="marca">` — pillares de la marca (4 bloques)
+- `<footer id="contacto">` — links sociales, horario
+- `.wa-float` — botón flotante WhatsApp
+- `<aside id="cart">` — drawer carrito (slide desde la derecha)
 
 ## Paleta de colores (variables CSS)
 
