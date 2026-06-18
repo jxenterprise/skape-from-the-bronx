@@ -273,10 +273,6 @@ function initSpecular(){
    INIT
    ════════════════════════════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded",()=>{
-  $("#emblemHero").innerHTML = emblemSVG();
-  $("#markNav").innerHTML    = emblemSVG();
-  $("#markFoot").innerHTML   = emblemSVG();
-
   renderGrid();
   syncCart();
   initSpecular();

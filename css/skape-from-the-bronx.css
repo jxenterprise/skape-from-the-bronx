@@ -248,7 +248,25 @@ body::before{
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
 .reveal.in{opacity:1;transform:none}
 
+/* ── logo imagen ── */
+.brand .mark{object-fit:contain;border-radius:4px}
+.foot .brand .mark{object-fit:contain;border-radius:4px}
+.hero-logo{
+  width:80%;height:80%;object-fit:contain;
+  position:relative;z-index:1;
+  filter:drop-shadow(0 22px 40px rgba(0,0,0,.6));
+}
+
 /* ── breakpoints ── */
+
+/* Móvil pequeño (<400px): ocultar texto "Carrito" del botón */
+@media (max-width:399px){
+  .cart-btn span:first-of-type{display:none}
+  .cart-btn{padding:9px 10px}
+  .hero h1{font-size:clamp(2.2rem,10vw,2.7rem)}
+  .section{padding:38px 0}
+}
+
 @media (min-width:560px){
   .pillars{grid-template-columns:repeat(2,1fr)}
 }
@@ -265,8 +283,9 @@ body::before{
   .hero-copy{order:1}.emblem-stage{order:2}
   .pillars{grid-template-columns:repeat(2,1fr)}
 }
+/* Desktop ancho: 4 pillars en una fila */
 @media (min-width:1040px){
-  .pillars{grid-template-columns:repeat(2,1fr)}
+  .pillars{grid-template-columns:repeat(4,1fr)}
 }
 
 @media (hover:hover){
