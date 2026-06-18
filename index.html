@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#14110f">
+<title>SKAPE FROM THE BRONX — Catálogo</title>
+<meta name="description" content="Streetwear y cultura del básquet desde el Bronx. Calzado, ropa y accesorios SKAPE.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Oswald:wght@500;600;700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<!-- ══════════ NAV ══════════ -->
+<header class="nav">
+  <div class="wrap nav-inner">
+    <a href="#top" class="brand" aria-label="SKAPE inicio">
+      <span class="mark" id="markNav"></span>
+      <span>
+        <span class="name chrome-text">SKAPE</span>
+        <span class="sub">From the Bronx</span>
+      </span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="#catalogo">Catálogo</a>
+      <a href="#marca">La marca</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+
+    <button class="cart-btn" id="openCart" aria-label="Abrir carrito">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+      <span>Carrito</span>
+      <span class="cart-count" id="cartCount" data-empty="true">0</span>
+    </button>
+
+    <button class="menu-toggle" id="menuToggle" aria-label="Menú" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+    </button>
+  </div>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#catalogo">Catálogo</a>
+  <a href="#marca">La marca</a>
+  <a href="#contacto">Contacto</a>
+</div>
+
+<a id="top"></a>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div class="hero-copy reveal">
+      <span class="eyebrow">Streetwear &amp; cultura del básquet</span>
+      <h1>Hecho en<br>el <span class="bronx">Bronx</span></h1>
+      <p class="lede">Calzado, ropa y accesorios diseñados para la cancha y la calle. Piezas propias SKAPE, sin atajos: del asfalto al concourse.</p>
+      <div class="hero-cta">
+        <a href="#catalogo" class="btn btn-primary">
+          Ver catálogo
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="#contacto" class="btn btn-ghost">Escríbenos</a>
+      </div>
+    </div>
+
+    <div class="emblem-stage reveal" id="emblemStage">
+      <span id="emblemHero"></span>
+      <span class="specular" id="specular"></span>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CATÁLOGO ══════════ -->
+<section class="section" id="catalogo">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div>
+        <span class="eyebrow">El catálogo</span>
+        <h2>Línea SKAPE</h2>
+      </div>
+      <div class="filters" id="filters" role="group" aria-label="Filtrar por categoría">
+        <button class="filter" data-cat="todo" aria-pressed="true">Todo</button>
+        <button class="filter" data-cat="calzado" aria-pressed="false">Calzado</button>
+        <button class="filter" data-cat="ropa" aria-pressed="false">Ropa</button>
+        <button class="filter" data-cat="accesorios" aria-pressed="false">Accesorios</button>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ══════════ MARCA ══════════ -->
+<section class="brand-strip" id="marca">
+  <div class="wrap">
+    <div class="reveal">
+      <span class="eyebrow">La marca</span>
+      <h2 class="chrome-text">Del concourse<br>a la calle</h2>
+      <p>SKAPE nació entre canchas de asfalto y trenes elevados. Cada pieza se diseña para aguantar el juego y el día a día — materiales honestos, cortes que sirven, identidad cromada que se reconoce de lejos.</p>
+    </div>
+    <div class="pillars reveal">
+      <div class="pillar"><div class="n">01</div><h4>Materiales honestos</h4><p>Algodón pesado, lonas resistentes y suelas pensadas para la cancha. Sin relleno.</p></div>
+      <div class="pillar"><div class="n">02</div><h4>Diseño propio</h4><p>Todo se dibuja en casa. Nada de marcas ajenas — solo el monograma SKAPE.</p></div>
+      <div class="pillar"><div class="n">03</div><h4>Cultura del Bronx</h4><p>Básquet, graffiti y barrio. La estética viene del lugar, no de un molde.</p></div>
+      <div class="pillar"><div class="n">04</div><h4>Tiradas cortas</h4><p>Lotes limitados. Lo que ves es lo que hay; cuando se va, se va.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ CONTACTO / FOOTER ══════════ -->
+<footer class="foot" id="contacto">
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="reveal">
+        <div class="brand">
+          <span class="mark" id="markFoot"></span>
+          <span>
+            <span class="name chrome-text" style="font-size:1.3rem;font-family:'Archivo';font-weight:900">SKAPE</span>
+            <span class="sub">From the Bronx</span>
+          </span>
+        </div>
+        <p>¿Quieres pedir, preguntar tallas o coordinar entrega? Arma tu carrito y mándanos el pedido por WhatsApp, o escríbenos directo.</p>
+        <div class="socials">
+          <a id="waLink" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.1l.37.22a9.9 9.9 0 1 0-3.4-3.42l.24.38-1 3.66 3.79-.84z"/><path d="M9.6 7.05c-.2-.45-.4-.46-.6-.47h-.5a1 1 0 0 0-.72.34A2.93 2.93 0 0 0 6.86 9.1a5.1 5.1 0 0 0 1.07 2.7 11.6 11.6 0 0 0 4.47 3.94c2.2.86 2.65.69 3.13.65.48-.05 1.55-.64 1.77-1.25.22-.62.22-1.14.15-1.25-.06-.11-.22-.18-.46-.3l-1.6-.8c-.22-.08-.38-.12-.54.12s-.62.79-.76.95c-.14.16-.28.18-.52.06a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.06c-.17-.3 0-.46.13-.6.12-.13.24-.3.36-.46.12-.16.16-.27.24-.45.08-.18.04-.34-.02-.46l-.69-1.66z"/></svg></a>
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2c.3 2.2 1.7 3.9 3.9 4.2v2.7c-1.3.1-2.6-.3-3.8-1v6.3a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.07v2.8a2.8 2.8 0 1 0 1.95 2.66V2h2.66z"/></svg></a>
+        </div>
+      </div>
+      <div class="reveal">
+        <span class="eyebrow" style="display:block;margin-bottom:12px">Navega</span>
+        <p style="margin-top:0"><a href="#catalogo">Catálogo</a> · <a href="#marca">La marca</a> · <a href="#contacto">Contacto</a></p>
+        <span class="eyebrow" style="display:block;margin:22px 0 10px">Horario</span>
+        <p style="margin-top:0">Lun–Sáb · 9:00–19:00</p>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> SKAPE From the Bronx · Streetwear &amp; basketball culture</span>
+      <span>Diseño propio · Sin marcas de terceros</span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp flotante -->
+<a class="wa-float" id="waFloat" href="#" aria-label="Escríbenos por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.1l.37.22a9.9 9.9 0 1 0-3.4-3.42l.24.38-1 3.66 3.79-.84z"/><path d="M9.6 7.05c-.2-.45-.4-.46-.6-.47h-.5a1 1 0 0 0-.72.34A2.93 2.93 0 0 0 6.86 9.1a5.1 5.1 0 0 0 1.07 2.7 11.6 11.6 0 0 0 4.47 3.94c2.2.86 2.65.69 3.13.65.48-.05 1.55-.64 1.77-1.25.22-.62.22-1.14.15-1.25-.06-.11-.22-.18-.46-.3l-1.6-.8c-.22-.08-.38-.12-.54.12s-.62.79-.76.95c-.14.16-.28.18-.52.06a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.06c-.17-.3 0-.46.13-.6.12-.13.24-.3.36-.46.12-.16.16-.27.24-.45.08-.18.04-.34-.02-.46l-.69-1.66z"/></svg>
+</a>
+
+<!-- ══════════ CARRITO ══════════ -->
+<div class="overlay" id="overlay"></div>
+<aside class="cart" id="cart" aria-label="Carrito de compra" aria-hidden="true">
+  <div class="cart-head">
+    <h3>Tu pedido</h3>
+    <button class="cart-close" id="closeCart" aria-label="Cerrar carrito">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot">
+    <div class="cart-total">
+      <span class="lbl">Total</span>
+      <span class="amt" id="cartTotal">$0</span>
+    </div>
+    <button class="btn" id="checkout">
+      <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24z"/></svg>
+      Pedir por WhatsApp
+    </button>
+    <p class="note">Te llevamos a WhatsApp con tu pedido listo para enviar.</p>
+  </div>
+</aside>
+
+<script src="js/main.js"></script>
+</body>
+</html>
