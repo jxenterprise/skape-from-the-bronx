@@ -14,45 +14,48 @@
 **Última actualización:** 2026-06-18
 
 **Qué se hizo hoy:**
-- Reorganización completa del proyecto: de un único HTML a estructura multi-archivo
-- Creado `index.html`, `css/styles.css`, `js/main.js`, `img/`
-- Inicializado repo Git y subido a GitHub (jxenterprise)
-- Configuradas 2 claves SSH (una por cuenta GitHub) — sin más conflictos entre cuentas
-- SSH config: `github-jxenterprise` → cuenta jxenterprise / `github-jampier` → cuenta Jampier-Developer
-- Remote de este repo: `git@github-jxenterprise:jxenterprise/skape-from-the-bronx.git`
-- Hooks de palabras clave (`continuemos` / `actualiza`) funcionando
+- Archivos renombrados: `css/skape-from-the-bronx.css` y `js/skape-from-the-bronx.js`
+- Logo real `img/Logo-Skape.png` integrado en: favicon, nav, hero y footer
+- SVG emblem eliminado del JS — reemplazado por imagen real
+- SEO completo: Open Graph, Twitter Cards y JSON-LD (ClothingStore) agregados al `<head>`
+- Responsive corregido: pillars 4 columnas en desktop (1040px+), fixes móvil <400px
+- Logo hero agrandado: 500px en PC, 340px en mobile
+- Cloudflare Pages conectado al repo — URL: `https://skapefromthebronx.pages.dev`
+- Solucionado conflicto de ramas: rama local renombrada de `master` a `main`; ahora `git push` va directo a `main` que es lo que Cloudflare monitorea
+- Open Graph URLs corregidas al dominio real `skapefromthebronx.pages.dev`
 
 **Qué falta por hacer:**
-- Agregar número real de WhatsApp en `js/main.js` → `const WHATSAPP = "0000000000"`
+- Agregar número real de WhatsApp en `js/skape-from-the-bronx.js` → `const WHATSAPP = "0000000000"`
 - Subir fotos reales de productos (carpeta `img/`)
 - Agregar links reales de Instagram y TikTok en el footer de `index.html`
-- Conectar a Cloudflare Pages para deploy automático
-- (Opcional) Reemplazar logo SVG generado por logo real de la marca
+- (Opcional) Dominio personalizado en Cloudflare Pages
 
 **Próximo paso acordado:**
-Editar el sitio — contenido real, fotos, WhatsApp, redes sociales. Luego conectar Cloudflare Pages.
+Contenido real: número de WhatsApp, fotos de productos, links de redes sociales.
 
 ---
 
 ## Qué es este proyecto
 
 Catálogo de e-commerce de streetwear y cultura del básquet, inspirado en el Bronx (NYC).
-**Estructura multi-archivo** separada en `index.html` + `css/styles.css` + `js/main.js`. Sin frameworks, sin build system, sin dependencias locales (solo Google Fonts externo). Abre `index.html` en el navegador directamente.
+**Estructura multi-archivo** separada en `index.html` + `css/skape-from-the-bronx.css` + `js/skape-from-the-bronx.js`. Sin frameworks, sin build system, sin dependencias locales (solo Google Fonts externo). Abre `index.html` en el navegador directamente.
+**Deploy:** Cloudflare Pages → `https://skapefromthebronx.pages.dev` (auto-deploy en cada push a `main`)
 
 ## Arquitectura del proyecto
 
 ```
 skape-from-the-bronx/
-├── index.html          — HTML (estructura, secciones, componentes)
+├── index.html                    — HTML (estructura, secciones, componentes)
 ├── css/
-│   └── styles.css      — Todo el CSS + variables CSS + breakpoints
+│   └── skape-from-the-bronx.css — Todo el CSS + variables CSS + breakpoints
 ├── js/
-│   └── main.js         — PRODUCTS array, carrito, lógica, emblema SVG
-├── img/                — Carpeta para fotos de productos (vacía aún)
+│   └── skape-from-the-bronx.js  — PRODUCTS array, carrito, lógica
+├── img/
+│   └── Logo-Skape.png            — Logo real (favicon + nav + hero + footer)
 ├── .claude/
-│   └── settings.json   — Hooks de palabras clave (continuemos / actualiza)
+│   └── settings.json             — Hooks de palabras clave (continuemos / actualiza)
 ├── .gitignore
-└── CLAUDE.md           — Este archivo
+└── CLAUDE.md                     — Este archivo
 ```
 
 **Secciones en index.html:**
@@ -148,9 +151,9 @@ const PRODUCTS = [
 
 ## Logo / emblema
 
-- SVG generado programáticamente en `emblemSVG()` — balón de básquet + rascacielos + puente colgante
-- Se inyecta en 3 lugares: `#emblemHero`, `#markNav`, `#markFoot`
-- Para reemplazar con logo real: cambiar el contenido de esos `<span>` con el SVG real
+- Logo real: `img/Logo-Skape.png` — aparece como `<img>` en nav, hero y footer
+- El SVG emblem programático fue eliminado — ya no se usa
+- Para cambiar el logo: reemplazar `img/Logo-Skape.png` con el nuevo archivo (mismo nombre)
 
 ## Añadir fotos reales a productos
 
@@ -168,10 +171,10 @@ Todo el contenido está en **español**. El sitio está orientado a mercado hisp
 
 ## Pendientes antes de lanzar
 
-1. Reemplazar `WHATSAPP = "0000000000"` con número real
-2. (Opcional) Reemplazar `emblemSVG()` con logo SVG real
+1. Reemplazar `WHATSAPP = "0000000000"` con número real en `js/skape-from-the-bronx.js`
+2. Agregar links reales de Instagram y TikTok en el footer de `index.html`
 3. (Opcional) Agregar fotos reales de productos con `img:` en PRODUCTS
-4. (Opcional) Agregar links reales de Instagram y TikTok en el footer
+4. (Opcional) Dominio personalizado en Cloudflare Pages
 
 ## Notas de edición rápida
 
