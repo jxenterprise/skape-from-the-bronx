@@ -15,19 +15,22 @@
 
 **Qué se hizo hoy:**
 - Reorganización completa del proyecto: de un único HTML a estructura multi-archivo
-- Creado `index.html` (solo HTML), `css/styles.css`, `js/main.js`, `img/` (vacía)
-- Inicializado repositorio Git (commit inicial hecho)
-- Configurados hooks de palabras clave (`continuemos` / `actualiza`) en `.claude/settings.json`
+- Creado `index.html`, `css/styles.css`, `js/main.js`, `img/`
+- Inicializado repo Git y subido a GitHub (jxenterprise)
+- Configuradas 2 claves SSH (una por cuenta GitHub) — sin más conflictos entre cuentas
+- SSH config: `github-jxenterprise` → cuenta jxenterprise / `github-jampier` → cuenta Jampier-Developer
+- Remote de este repo: `git@github-jxenterprise:jxenterprise/skape-from-the-bronx.git`
+- Hooks de palabras clave (`continuemos` / `actualiza`) funcionando
 
 **Qué falta por hacer:**
-- Conectar repo local a GitHub (el usuario aún no ha creado el repo en GitHub)
 - Agregar número real de WhatsApp en `js/main.js` → `const WHATSAPP = "0000000000"`
 - Subir fotos reales de productos (carpeta `img/`)
 - Agregar links reales de Instagram y TikTok en el footer de `index.html`
+- Conectar a Cloudflare Pages para deploy automático
 - (Opcional) Reemplazar logo SVG generado por logo real de la marca
 
 **Próximo paso acordado:**
-Esperar que el usuario cree el repo en GitHub y pase la URL para hacer el push.
+Editar el sitio — contenido real, fotos, WhatsApp, redes sociales. Luego conectar Cloudflare Pages.
 
 ---
 
