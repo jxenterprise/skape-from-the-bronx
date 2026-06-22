@@ -5,7 +5,7 @@
 | Palabra       | Qué hace Claude automáticamente |
 |---------------|----------------------------------|
 | `continuemos` | Lee este CLAUDE.md + `git log --oneline -5` y continúa el trabajo sin pedir contexto |
-| `actualiza`   | **Paso 1:** Actualiza la sección Estado actual de este CLAUDE.md. **Paso 2:** `git push` (el MD actualizado sube junto con el código). Siempre en ese orden. |
+| `actualiza`   | **Paso 1:** Actualiza la sección Estado actual de este CLAUDE.md. **Paso 2:** Actualiza README.md (catálogo, pendientes, o cualquier sección que haya cambiado). **Paso 3:** `git push` (ambos MDs suben junto con el código). Siempre en ese orden. |
 
 ---
 
