@@ -4,24 +4,19 @@
 
 // Tu número de WhatsApp CON código de país y SIN signos
 // Ej: Venezuela 584121234567 · Colombia 573001234567 · México 521234567890
-const WHATSAPP = "0000000000"; // ⚠️ REEMPLAZAR
+const WHATSAPP = "584125385086";
 
 const CURRENCY = "$";
 
-// Catálogo. cat: 'calzado' | 'ropa' | 'accesorios'
+// Catálogo. cat: 'calzado' | 'sombreros'
 // Para usar fotos reales agrega: img:"URL_o_data_URI_base64"
 const PRODUCTS = [
-  { id:"slide-concourse", name:"Concourse Slide",        cat:"calzado",    price:45, tag:"Para después del juego", icon:"slide",   accent:"#c47a45" },
-  { id:"low-grand",       name:"Grand Court Low",         cat:"calzado",    price:89, tag:"Sneaker de cancha",      icon:"sneaker", accent:"#28c2d4" },
-  { id:"bridge-runner",   name:"Bridge Runner",           cat:"calzado",    price:95, tag:"Para el asfalto",        icon:"sneaker", accent:"#8b9197" },
-  { id:"hoodie-bronx",    name:"Bronx Heavyweight Hoodie",cat:"ropa",       price:65, tag:"Algodón 440 g",          icon:"hoodie",  accent:"#c47a45" },
-  { id:"crew-161",        name:"161st St. Crewneck",      cat:"ropa",       price:58, tag:"Felpa cepillada",        icon:"hoodie",  accent:"#28c2d4" },
-  { id:"tee-court",       name:"Court Culture Tee",       cat:"ropa",       price:32, tag:"Estampado en serigrafía",icon:"tee",     accent:"#8b9197" },
-  { id:"shorts-concourse",name:"Concourse Shorts",        cat:"ropa",       price:40, tag:"Mesh transpirable",      icon:"shorts",  accent:"#c47a45" },
-  { id:"cap-snap",        name:"Skape Snapback",          cat:"accesorios", price:28, tag:"Monograma bordado",      icon:"cap",     accent:"#28c2d4" },
-  { id:"beanie-chrome",   name:"Chrome Monogram Beanie",  cat:"accesorios", price:24, tag:"Punto acanalado",        icon:"beanie",  accent:"#8b9197" },
-  { id:"socks-court",     name:"Court Socks (3 pares)",   cat:"accesorios", price:18, tag:"Caña media",             icon:"socks",   accent:"#c47a45" },
-  { id:"tote-bronx",      name:"Bronx Tote",              cat:"accesorios", price:22, tag:"Lona resistente",        icon:"tote",    accent:"#28c2d4" },
+  { id:"slide-concourse", name:"Concourse Slide",       cat:"calzado",   price:45, tag:"Para después del juego", icon:"slide",   accent:"#c47a45", img:"img/Calzados/Calzado 1.png" },
+  { id:"low-grand",       name:"Grand Court Low",        cat:"calzado",   price:89, tag:"Sneaker de cancha",      icon:"sneaker", accent:"#28c2d4", img:"img/Calzados/Calzado 2.png" },
+  { id:"bridge-runner",   name:"Bridge Runner",          cat:"calzado",   price:95, tag:"Para el asfalto",        icon:"sneaker", accent:"#8b9197", img:"img/Calzados/Calzado 3.png" },
+  { id:"cap-snap",        name:"Skape Snapback",         cat:"sombreros", price:28, tag:"Monograma bordado",      icon:"cap",     accent:"#28c2d4", img:"img/Sombreros/Sombrero 1.png" },
+  { id:"beanie-chrome",   name:"Chrome Monogram Beanie", cat:"sombreros", price:24, tag:"Punto acanalado",        icon:"beanie",  accent:"#c47a45", img:"img/Sombreros/Sombrero 2.png" },
+  { id:"bucket-skape",    name:"Skape Bucket Hat",       cat:"sombreros", price:30, tag:"Ala ancha, bordado",     icon:"cap",     accent:"#8b9197", img:"img/Sombreros/Sombrero 3.png" },
 ];
 
 /* ════════════════════════════════════════════════════════════════
@@ -103,24 +98,86 @@ function emblemSVG(){
    ESTADO + RENDER
    ════════════════════════════════════════════════════════════════ */
 const $ = s => document.querySelector(s);
-const grid = $("#grid");
 const cart = {};
-let filter = "todo";
 
 const money = n => CURRENCY + n.toLocaleString("es");
 
+function labelCat(c){ return {calzado:"Calzado",sombreros:"Sombreros"}[c]||c; }
+
 function mediaInner(p){
-  if(p.img) return `<img class="abs-img" src="${p.img}" alt="${p.name}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">`;
+  if(p.img) return `<img class="prod-img" src="${p.img}" alt="${p.name}">`;
   return `<div class="mono">S</div><div class="pic" style="color:${p.accent}">${iconSVG(p.icon)}</div>`;
 }
 
-function renderGrid(){
-  const list = PRODUCTS.filter(p => filter==="todo" || p.cat===filter);
-  grid.innerHTML = list.map(p => `
-    <article class="card reveal" data-cat="${p.cat}">
-      <div class="card-media" style="background:linear-gradient(150deg, ${p.accent}22, #1d1714 70%)">
+/* ════════════════════════════════════════════════════════════════
+   CARRUSEL
+   ════════════════════════════════════════════════════════════════ */
+/* ════════════════════════════════════════════════════════════════
+   LIGHTBOX
+   ════════════════════════════════════════════════════════════════ */
+let lbIdx = 0, lbScale = 1;
+const LB_MIN = 1, LB_MAX = 3, LB_STEP = 0.5;
+
+function openLightbox(productId){
+  const idx = PRODUCTS.findIndex(p => p.id === productId);
+  if(idx < 0) return;
+  lbIdx = idx; lbScale = 1;
+  lbUpdate();
+  $("#lbOverlay").classList.add("open");
+  document.body.classList.add("locked");
+}
+
+function closeLightbox(){
+  $("#lbOverlay").classList.remove("open");
+  if(!$("#cart").classList.contains("open") && !$("#mobileMenu").classList.contains("open"))
+    document.body.classList.remove("locked");
+}
+
+function lbUpdate(){
+  const p = PRODUCTS[lbIdx];
+  const img = $("#lbImg");
+  img.src = p.img || ""; img.alt = p.name;
+  img.style.transform = `scale(${lbScale})`;
+  $("#lbTitle").textContent = p.name;
+  $("#lbCounter").textContent = `${lbIdx+1} de ${PRODUCTS.length}`;
+  $("#lbZoomPct").textContent = Math.round(lbScale*100)+"%";
+  $("#lbImgWrap").classList.toggle("zoomed", lbScale > 1);
+  $("#lbZoomOut").disabled = lbScale <= LB_MIN;
+  $("#lbZoomIn").disabled  = lbScale >= LB_MAX;
+  $("#lbPrev").disabled = lbIdx === 0;
+  $("#lbNext").disabled = lbIdx === PRODUCTS.length - 1;
+}
+
+function lbSetZoom(s){
+  lbScale = Math.min(LB_MAX, Math.max(LB_MIN, s));
+  lbUpdate();
+}
+
+function lbNav(dir){
+  const next = lbIdx + dir;
+  if(next < 0 || next >= PRODUCTS.length) return;
+  lbIdx = next; lbScale = 1; lbUpdate();
+}
+
+/* ── carrusel ── */
+let carIdx = 0;
+const CAR_GAP = 20;
+
+function visibleCount(){
+  if(window.innerWidth < 560) return 1;
+  if(window.innerWidth < 880) return 2;
+  return 3;
+}
+function maxIdx(){ return Math.max(0, PRODUCTS.length - visibleCount()); }
+
+function renderCarousel(){
+  const track = $("#carouselTrack");
+  track.innerHTML = PRODUCTS.map(p => `
+    <article class="card car-card" data-cat="${p.cat}">
+      <div class="card-media" style="background:linear-gradient(150deg, ${p.accent}22, #1d1714 70%)" data-lb-id="${p.id}">
         <span class="badge">${labelCat(p.cat)}</span>
         ${mediaInner(p)}
+        ${p.img ? `<span class="lb-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg></span>` : ""}
       </div>
       <div class="card-body">
         <h3>${p.name}</h3>
@@ -134,15 +191,118 @@ function renderGrid(){
         </div>
       </div>
     </article>`).join("");
+  carIdx = 0;
+  renderDots();
+  moveCarousel();
   observeReveals();
 }
 
-function labelCat(c){ return {calzado:"Calzado",ropa:"Ropa",accesorios:"Accesorios"}[c]||c; }
+function moveCarousel(){
+  const track = $("#carouselTrack");
+  const first = track.querySelector('.car-card');
+  if(!first) return;
+  const w = first.getBoundingClientRect().width;
+  track.style.transform = `translateX(-${carIdx * (w + CAR_GAP)}px)`;
+  const prev = $("#prevBtn"), next = $("#nextBtn");
+  if(prev) prev.disabled = carIdx === 0;
+  if(next) next.disabled = carIdx >= maxIdx();
+  document.querySelectorAll('.dot').forEach((d,i) => d.classList.toggle('active', i === carIdx));
+}
+
+function renderDots(){
+  const dots = $("#carouselDots");
+  if(!dots) return;
+  dots.innerHTML = Array.from({length: maxIdx()+1}, (_,i) =>
+    `<button class="dot${i===0?' active':''}" data-dot="${i}" aria-label="Producto ${i+1}"></button>`
+  ).join("");
+}
+
+/* ── modal "ya en carrito" ── */
+let pendingId = null;
+let modalMode = null; // "add" | "del"
+
+function showModal(id, mode){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  pendingId = id;
+  modalMode = mode;
+  const pic = p.img
+    ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+    : `<div style="width:100%;height:100%;display:grid;place-items:center;color:${p.accent};background:linear-gradient(150deg,${p.accent}22,#14110f)">${iconSVG(p.icon)}</div>`;
+  $("#modalPic").innerHTML = pic;
+  if(mode === "del"){
+    $("#modalTitle").textContent = "¿Eliminar del carrito?";
+    $("#modalMsg").textContent = `¿Quieres quitar "${p.name}" de tu pedido?`;
+    $("#modalConfirm").textContent = "Sí, eliminar";
+  } else {
+    const qty = cart[id]||0;
+    $("#modalTitle").textContent = "Ya está en tu carrito";
+    $("#modalMsg").textContent = `"${p.name}" ya tienes ${qty} en el carrito. ¿Quieres agregar una más?`;
+    $("#modalConfirm").textContent = "Sí, agregar una más";
+  }
+  $("#modalOverlay").classList.add("open");
+  document.body.classList.add("locked");
+}
+
+function hideModal(){
+  $("#modalOverlay").classList.remove("open");
+  pendingId = null;
+  modalMode = null;
+  if(!$("#cart").classList.contains("open") && !$("#mobileMenu").classList.contains("open"))
+    document.body.classList.remove("locked");
+}
 
 /* ── carrito ── */
+function cartBtnShake(){
+  const btn = $("#openCart");
+  btn.classList.remove("shake");
+  void btn.offsetWidth;
+  btn.classList.add("shake");
+  btn.addEventListener("animationend",()=>btn.classList.remove("shake"),{once:true});
+}
+
 function addToCart(id){
+  if(cart[id]){ showModal(id, "add"); return; }
+  doAddToCart(id);
+}
+
+function showToast(id){
+  const p = PRODUCTS.find(x=>x.id===id);
+  if(!p) return;
+  const wrap = $("#toastWrap");
+  const t = document.createElement("div");
+  t.className = "toast";
+  const pic = p.img
+    ? `<img src="${p.img}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover">`
+    : `<div style="background:linear-gradient(150deg,${p.accent}22,#14110f);color:${p.accent}">${iconSVG(p.icon)}</div>`;
+  t.innerHTML = `
+    <div class="toast-icon">${pic}</div>
+    <div class="toast-body">
+      <div class="toast-lbl">Agregado al carrito</div>
+      <div class="toast-name">${p.name}</div>
+    </div>
+    <button class="toast-x" aria-label="Cerrar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+    </button>`;
+  wrap.appendChild(t);
+  requestAnimationFrame(()=>requestAnimationFrame(()=>t.classList.add("in")));
+  const timer = setTimeout(()=>closeToast(t), 6000);
+  t.querySelector(".toast-x").addEventListener("click",()=>closeToast(t));
+  t._timer = timer;
+}
+
+function closeToast(t){
+  clearTimeout(t._timer);
+  t.classList.remove("in");
+  t.classList.add("out");
+  t.addEventListener("transitionend",()=>t.remove(),{once:true});
+}
+
+function doAddToCart(id){
   cart[id] = (cart[id]||0)+1;
   syncCart();
+  cartBtnShake();
+  showToast(id);
   const btn = document.querySelector(`[data-add="${id}"]`);
   if(btn){
     btn.classList.add("added");
@@ -152,6 +312,22 @@ function addToCart(id){
       btn.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg> Agregar';
     },1100);
   }
+}
+
+function removeFromCart(id){
+  showModal(id, "del");
+}
+
+function doRemoveFromCart(id){
+  delete cart[id];
+  syncCart();
+  renderCart();
+}
+
+function clearCart(){
+  Object.keys(cart).forEach(id=>delete cart[id]);
+  syncCart();
+  renderCart();
 }
 
 function setQty(id, d){
@@ -177,7 +353,9 @@ function cartTotal(){
 
 function renderCart(){
   const items = $("#cartItems");
+  const clearBtn = $("#clearCart");
   const ids = Object.keys(cart);
+  if(clearBtn) clearBtn.style.display = ids.length ? "" : "none";
   if(!ids.length){
     items.innerHTML = `<div class="cart-empty">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
@@ -197,10 +375,15 @@ function renderCart(){
         <h4>${p.name}</h4>
         <div class="ci-price">${money(p.price)} c/u · <strong style="color:var(--chrome)">${money(p.price*q)}</strong></div>
       </div>
-      <div class="qty">
-        <button data-q="${id}" data-d="-1" aria-label="Quitar uno">−</button>
-        <span class="q">${q}</span>
-        <button data-q="${id}" data-d="1" aria-label="Agregar uno">+</button>
+      <div class="ci-right">
+        <button class="ci-del" data-del="${id}" aria-label="Eliminar ${p.name}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6M14 11v6"/></svg>
+        </button>
+        <div class="qty">
+          <button data-q="${id}" data-d="-1" aria-label="Quitar uno">−</button>
+          <span class="q">${q}</span>
+          <button data-q="${id}" data-d="1" aria-label="Agregar uno">+</button>
+        </div>
       </div>
     </div>`;
   }).join("");
@@ -217,7 +400,7 @@ function checkout(){
     const q = cart[id];
     msg += `• ${q}× ${p.name} — ${money(p.price*q)}%0A`;
   });
-  msg += `%0A*Total: ${money(cartTotal())}*%0A%0A¡Hola! Quiero hacer este pedido.`;
+  msg += `%0A*Total: ${money(cartTotal())}*%0A%0A¡Hola SKAPE! Quisiera hacer este pedido y consultar disponibilidad. ¿Pueden confirmarme? 🙏`;
   const num = WHATSAPP.replace(/\D/g,"");
   window.open(`https://wa.me/${num}?text=${msg}`,"_blank");
 }
@@ -273,38 +456,111 @@ function initSpecular(){
    INIT
    ════════════════════════════════════════════════════════════════ */
 document.addEventListener("DOMContentLoaded",()=>{
-  renderGrid();
+  renderCarousel();
   syncCart();
   initSpecular();
   $("#year").textContent = new Date().getFullYear();
 
   const num   = WHATSAPP.replace(/\D/g,"");
-  const waUrl = `https://wa.me/${num}?text=${encodeURIComponent("¡Hola SKAPE! Tengo una pregunta.")}`;
+  const waUrl = `https://wa.me/${num}?text=${encodeURIComponent("¡Hola SKAPE! Quiero consultar disponibilidad de sus productos. 👟🧢")}`;
   $("#waFloat").href = waUrl;
   $("#waLink").href  = waUrl;
 
-  $("#filters").addEventListener("click",e=>{
-    const b = e.target.closest(".filter"); if(!b) return;
-    filter = b.dataset.cat;
-    document.querySelectorAll(".filter").forEach(f=>f.setAttribute("aria-pressed", f===b));
-    renderGrid();
+  // Flechas del carrusel
+  $("#prevBtn").addEventListener("click",()=>{ if(carIdx>0){ carIdx--; moveCarousel(); }});
+  $("#nextBtn").addEventListener("click",()=>{ if(carIdx<maxIdx()){ carIdx++; moveCarousel(); }});
+
+  // Dots
+  $("#carouselDots").addEventListener("click",e=>{
+    const b = e.target.closest("[data-dot]"); if(!b) return;
+    carIdx = +b.dataset.dot; moveCarousel();
   });
 
-  grid.addEventListener("click",e=>{
-    const b = e.target.closest("[data-add]"); if(b) addToCart(b.dataset.add);
+  // Click en cards del carrusel
+  $("#carouselTrack").addEventListener("click",e=>{
+    const b = e.target.closest("[data-add]"); if(b){ addToCart(b.dataset.add); return; }
+    const lb = e.target.closest("[data-lb-id]"); if(lb) openLightbox(lb.dataset.lbId);
+  });
+
+  // Lightbox
+  $("#lbClose").addEventListener("click", closeLightbox);
+  $("#lbZoomIn").addEventListener("click", ()=>lbSetZoom(lbScale + LB_STEP));
+  $("#lbZoomOut").addEventListener("click", ()=>lbSetZoom(lbScale - LB_STEP));
+  $("#lbPrev").addEventListener("click", ()=>lbNav(-1));
+  $("#lbNext").addEventListener("click", ()=>lbNav(1));
+  // Click en imagen → alternar zoom 1x / 2x
+  $("#lbImgWrap").addEventListener("click", ()=>lbSetZoom(lbScale > 1 ? LB_MIN : 2));
+  // Scroll para zoom (desktop)
+  $("#lbStage").addEventListener("wheel", e=>{
+    e.preventDefault();
+    lbSetZoom(lbScale + (e.deltaY < 0 ? LB_STEP : -LB_STEP));
+  }, {passive:false});
+  // Swipe táctil para navegar (móvil)
+  let lbTouchX = null;
+  $("#lbStage").addEventListener("touchstart", e=>{ lbTouchX=e.touches[0].clientX; },{passive:true});
+  $("#lbStage").addEventListener("touchend", e=>{
+    if(lbTouchX===null) return;
+    const diff = lbTouchX - e.changedTouches[0].clientX;
+    if(Math.abs(diff)>50){ diff>0 ? lbNav(1) : lbNav(-1); }
+    lbTouchX = null;
+  },{passive:true});
+
+  // Swipe táctil
+  let touchX = null;
+  $("#carouselTrack").addEventListener("touchstart",e=>{ touchX=e.touches[0].clientX; },{passive:true});
+  $("#carouselTrack").addEventListener("touchend",e=>{
+    if(touchX===null) return;
+    const diff = touchX - e.changedTouches[0].clientX;
+    if(Math.abs(diff)>50){
+      if(diff>0 && carIdx<maxIdx()){ carIdx++; moveCarousel(); }
+      else if(diff<0 && carIdx>0){ carIdx--; moveCarousel(); }
+    }
+    touchX = null;
+  },{passive:true});
+
+  // Resize
+  window.addEventListener("resize",()=>{
+    carIdx = Math.min(carIdx, maxIdx());
+    renderDots();
+    moveCarousel();
   });
 
   $("#cartItems").addEventListener("click",e=>{
-    const b = e.target.closest("[data-q]"); if(b) setQty(b.dataset.q, +b.dataset.d);
+    const q = e.target.closest("[data-q]"); if(q){ setQty(q.dataset.q, +q.dataset.d); return; }
+    const d = e.target.closest("[data-del]"); if(d) removeFromCart(d.dataset.del);
   });
 
   $("#openCart").addEventListener("click",openCart);
   $("#closeCart").addEventListener("click",closeCart);
   $("#overlay").addEventListener("click",closeCart);
   $("#checkout").addEventListener("click",checkout);
+  $("#clearCart").addEventListener("click",clearCart);
+
+  // Modal
+  $("#modalConfirm").addEventListener("click",()=>{
+    if(!pendingId) return;
+    if(modalMode === "del"){
+      doRemoveFromCart(pendingId);
+      hideModal();
+    } else {
+      doAddToCart(pendingId);
+      hideModal();
+      openCart();
+    }
+  });
+  $("#modalCancel").addEventListener("click",hideModal);
+  $("#modalOverlay").addEventListener("click",e=>{ if(e.target===$("#modalOverlay")) hideModal(); });
 
   $("#menuToggle").addEventListener("click",()=>toggleMenu());
   $("#mobileMenu").addEventListener("click",e=>{ if(e.target.tagName==="A") toggleMenu(false); });
 
-  document.addEventListener("keydown",e=>{ if(e.key==="Escape"){ closeCart(); toggleMenu(false); } });
+  document.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){ closeLightbox(); closeCart(); toggleMenu(false); hideModal(); }
+    if(!$("#lbOverlay").classList.contains("open")) return;
+    if(e.key==="ArrowLeft")  lbNav(-1);
+    if(e.key==="ArrowRight") lbNav(1);
+    if(e.key==="+"||e.key==="=") lbSetZoom(lbScale+LB_STEP);
+    if(e.key==="-")              lbSetZoom(lbScale-LB_STEP);
+    if(e.key==="0")              lbSetZoom(LB_MIN);
+  });
 });

@@ -11,15 +11,15 @@
 <link rel="canonical" href="https://skapefromthebronx.pages.dev/">
 
 <!-- Favicon -->
-<link rel="icon" type="image/png" href="img/Logo-Skape.png">
-<link rel="apple-touch-icon" href="img/Logo-Skape.png">
+<link rel="icon" type="image/png" href="img/Logo_Web/Logo-Skape.png">
+<link rel="apple-touch-icon" href="img/Logo_Web/Logo-Skape.png">
 
 <!-- Open Graph (WhatsApp, Instagram, Facebook, iMessage) -->
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="SKAPE From the Bronx">
 <meta property="og:title" content="SKAPE FROM THE BRONX — Streetwear &amp; Basketball Culture">
 <meta property="og:description" content="Calzado, ropa y accesorios diseñados para la cancha y la calle. Piezas propias SKAPE, tiradas cortas, del asfalto al concourse.">
-<meta property="og:image" content="https://skapefromthebronx.pages.dev/img/Logo-Skape.png">
+<meta property="og:image" content="https://skapefromthebronx.pages.dev/img/Logo_Web/Logo-Skape.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:url" content="https://skapefromthebronx.pages.dev/">
@@ -29,7 +29,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="SKAPE FROM THE BRONX — Streetwear &amp; Basketball Culture">
 <meta name="twitter:description" content="Calzado, ropa y accesorios diseñados para la cancha y la calle. Piezas propias SKAPE, tiradas cortas.">
-<meta name="twitter:image" content="https://skapefromthebronx.pages.dev/img/Logo-Skape.png">
+<meta name="twitter:image" content="https://skapefromthebronx.pages.dev/img/Logo_Web/Logo-Skape.png">
 
 <!-- JSON-LD Structured Data -->
 <script type="application/ld+json">
@@ -38,7 +38,7 @@
   "@type": "ClothingStore",
   "name": "SKAPE From the Bronx",
   "description": "Streetwear y cultura del básquet desde el Bronx. Calzado, ropa y accesorios SKAPE.",
-  "image": "https://skapefromthebronx.pages.dev/img/Logo-Skape.png",
+  "image": "https://skapefromthebronx.pages.dev/img/Logo_Web/Logo-Skape.png",
   "url": "https://skapefromthebronx.pages.dev/",
   "openingHours": "Mo-Sa 09:00-19:00",
   "currenciesAccepted": "USD",
@@ -57,7 +57,7 @@
 <header class="nav">
   <div class="wrap nav-inner">
     <a href="#top" class="brand" aria-label="SKAPE inicio">
-      <img src="img/Logo-Skape.png" class="mark" alt="Logo SKAPE">
+      <img src="img/Logo_Web/Logo-Skape.png" class="mark" alt="Logo SKAPE">
       <span>
         <span class="name chrome-text">SKAPE</span>
         <span class="sub">From the Bronx</span>
@@ -107,7 +107,7 @@
     </div>
 
     <div class="emblem-stage reveal" id="emblemStage">
-      <img src="img/Logo-Skape.png" class="hero-logo" alt="SKAPE From the Bronx">
+      <img src="img/Logo_Web/Logo-Skape.png" class="hero-logo" alt="SKAPE From the Bronx">
       <span class="specular" id="specular"></span>
     </div>
   </div>
@@ -121,14 +121,19 @@
         <span class="eyebrow">El catálogo</span>
         <h2>Línea SKAPE</h2>
       </div>
-      <div class="filters" id="filters" role="group" aria-label="Filtrar por categoría">
-        <button class="filter" data-cat="todo" aria-pressed="true">Todo</button>
-        <button class="filter" data-cat="calzado" aria-pressed="false">Calzado</button>
-        <button class="filter" data-cat="ropa" aria-pressed="false">Ropa</button>
-        <button class="filter" data-cat="accesorios" aria-pressed="false">Accesorios</button>
+      <div class="car-btns">
+        <button class="car-arrow" id="prevBtn" aria-label="Anterior" disabled>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="car-arrow" id="nextBtn" aria-label="Siguiente">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
       </div>
     </div>
-    <div class="grid" id="grid"></div>
+    <div class="car-wrap">
+      <div class="car-track" id="carouselTrack"></div>
+    </div>
+    <div class="car-dots" id="carouselDots"></div>
   </div>
 </section>
 
@@ -155,7 +160,7 @@
     <div class="foot-top">
       <div class="reveal">
         <div class="brand">
-          <img src="img/Logo-Skape.png" class="mark" alt="Logo SKAPE">
+          <img src="img/Logo_Web/Logo-Skape.png" class="mark" alt="Logo SKAPE">
           <span>
             <span class="name chrome-text" style="font-size:1.3rem;font-family:'Archivo';font-weight:900">SKAPE</span>
             <span class="sub">From the Bronx</span>
@@ -163,9 +168,9 @@
         </div>
         <p>¿Quieres pedir, preguntar tallas o coordinar entrega? Arma tu carrito y mándanos el pedido por WhatsApp, o escríbenos directo.</p>
         <div class="socials">
-          <a id="waLink" href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.1l.37.22a9.9 9.9 0 1 0-3.4-3.42l.24.38-1 3.66 3.79-.84z"/><path d="M9.6 7.05c-.2-.45-.4-.46-.6-.47h-.5a1 1 0 0 0-.72.34A2.93 2.93 0 0 0 6.86 9.1a5.1 5.1 0 0 0 1.07 2.7 11.6 11.6 0 0 0 4.47 3.94c2.2.86 2.65.69 3.13.65.48-.05 1.55-.64 1.77-1.25.22-.62.22-1.14.15-1.25-.06-.11-.22-.18-.46-.3l-1.6-.8c-.22-.08-.38-.12-.54.12s-.62.79-.76.95c-.14.16-.28.18-.52.06a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.06c-.17-.3 0-.46.13-.6.12-.13.24-.3.36-.46.12-.16.16-.27.24-.45.08-.18.04-.34-.02-.46l-.69-1.66z"/></svg></a>
-          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
-          <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2c.3 2.2 1.7 3.9 3.9 4.2v2.7c-1.3.1-2.6-.3-3.8-1v6.3a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.07v2.8a2.8 2.8 0 1 0 1.95 2.66V2h2.66z"/></svg></a>
+          <a id="waLink" href="#" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.1l.37.22a9.9 9.9 0 1 0-3.4-3.42l.24.38-1 3.66 3.79-.84z"/><path d="M9.6 7.05c-.2-.45-.4-.46-.6-.47h-.5a1 1 0 0 0-.72.34A2.93 2.93 0 0 0 6.86 9.1a5.1 5.1 0 0 0 1.07 2.7 11.6 11.6 0 0 0 4.47 3.94c2.2.86 2.65.69 3.13.65.48-.05 1.55-.64 1.77-1.25.22-.62.22-1.14.15-1.25-.06-.11-.22-.18-.46-.3l-1.6-.8c-.22-.08-.38-.12-.54.12s-.62.79-.76.95c-.14.16-.28.18-.52.06a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.06c-.17-.3 0-.46.13-.6.12-.13.24-.3.36-.46.12-.16.16-.27.24-.45.08-.18.04-.34-.02-.46l-.69-1.66z"/></svg></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.2" fill="currentColor" stroke="none"/></svg></a>
+          <a href="#" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M16.5 2c.3 2.2 1.7 3.9 3.9 4.2v2.7c-1.3.1-2.6-.3-3.8-1v6.3a5.6 5.6 0 1 1-5.6-5.6c.3 0 .6 0 .9.07v2.8a2.8 2.8 0 1 0 1.95 2.66V2h2.66z"/></svg></a>
         </div>
       </div>
       <div class="reveal">
@@ -183,7 +188,7 @@
 </footer>
 
 <!-- WhatsApp flotante -->
-<a class="wa-float" id="waFloat" href="#" aria-label="Escríbenos por WhatsApp">
+<a class="wa-float" id="waFloat" href="#" target="_blank" rel="noopener noreferrer" aria-label="Escríbenos por WhatsApp">
   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M.06 24l1.7-6.2A11.9 11.9 0 1 1 12 24a11.9 11.9 0 0 1-5.7-1.45L.06 24zM6.6 20.1l.37.22a9.9 9.9 0 1 0-3.4-3.42l.24.38-1 3.66 3.79-.84z"/><path d="M9.6 7.05c-.2-.45-.4-.46-.6-.47h-.5a1 1 0 0 0-.72.34A2.93 2.93 0 0 0 6.86 9.1a5.1 5.1 0 0 0 1.07 2.7 11.6 11.6 0 0 0 4.47 3.94c2.2.86 2.65.69 3.13.65.48-.05 1.55-.64 1.77-1.25.22-.62.22-1.14.15-1.25-.06-.11-.22-.18-.46-.3l-1.6-.8c-.22-.08-.38-.12-.54.12s-.62.79-.76.95c-.14.16-.28.18-.52.06a8.2 8.2 0 0 1-2.4-1.48 9 9 0 0 1-1.66-2.06c-.17-.3 0-.46.13-.6.12-.13.24-.3.36-.46.12-.16.16-.27.24-.45.08-.18.04-.34-.02-.46l-.69-1.66z"/></svg>
 </a>
 
@@ -192,9 +197,12 @@
 <aside class="cart" id="cart" aria-label="Carrito de compra" aria-hidden="true">
   <div class="cart-head">
     <h3>Tu pedido</h3>
-    <button class="cart-close" id="closeCart" aria-label="Cerrar carrito">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
+    <div class="cart-head-actions">
+      <button class="clear-cart" id="clearCart" style="display:none">Vaciar</button>
+      <button class="cart-close" id="closeCart" aria-label="Cerrar carrito">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
   </div>
   <div class="cart-items" id="cartItems"></div>
   <div class="cart-foot">
@@ -209,6 +217,55 @@
     <p class="note">Te llevamos a WhatsApp con tu pedido listo para enviar.</p>
   </div>
 </aside>
+
+<!-- LIGHTBOX -->
+<div class="lb-overlay" id="lbOverlay" role="dialog" aria-modal="true" aria-label="Vista de imagen">
+  <div class="lb-bar">
+    <span class="lb-title" id="lbTitle"></span>
+    <div class="lb-ctrls">
+      <button class="lb-btn" id="lbZoomOut" aria-label="Alejar" disabled>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.35-4.35M8 11h6"/></svg>
+      </button>
+      <span class="lb-zoom-pct" id="lbZoomPct">100%</span>
+      <button class="lb-btn" id="lbZoomIn" aria-label="Acercar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="11" cy="11" r="6"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg>
+      </button>
+      <button class="lb-btn lb-btn-close" id="lbClose" aria-label="Cerrar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+  </div>
+  <div class="lb-stage" id="lbStage">
+    <button class="lb-arrow lb-prev" id="lbPrev" aria-label="Anterior">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
+    </button>
+    <div class="lb-img-wrap" id="lbImgWrap">
+      <img class="lb-img" id="lbImg" src="" alt="">
+    </div>
+    <button class="lb-arrow lb-next" id="lbNext" aria-label="Siguiente">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg>
+    </button>
+  </div>
+  <div class="lb-foot">
+    <span class="lb-counter" id="lbCounter"></span>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<!-- MODAL — ya en carrito -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalBox" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-pic" id="modalPic"></div>
+    <h4 id="modalTitle">Ya está en tu carrito</h4>
+    <p id="modalMsg"></p>
+    <div class="modal-actions">
+      <button class="btn" id="modalConfirm">Sí, agregar una más</button>
+      <button class="btn-muted" id="modalCancel">No, gracias</button>
+    </div>
+  </div>
+</div>
 
 <script src="js/skape-from-the-bronx.js"></script>
 </body>

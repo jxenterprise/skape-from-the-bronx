@@ -11,27 +11,31 @@
 
 ## Estado actual
 
-**Última actualización:** 2026-06-18
+**Última actualización:** 2026-06-22
 
-**Qué se hizo hoy:**
-- Archivos renombrados: `css/skape-from-the-bronx.css` y `js/skape-from-the-bronx.js`
-- Logo real `img/Logo-Skape.png` integrado en: favicon (pestaña del navegador), nav, hero y footer
-- SVG emblem programático eliminado del JS — reemplazado por imagen real
-- SEO completo: Open Graph, Twitter Cards y JSON-LD (ClothingStore) en el `<head>`
-- URL Open Graph correcta: `https://skapefromthebronx.pages.dev`
-- Responsive corregido: pillars 4 columnas en desktop (1040px+), fixes móvil <400px
-- Logo hero agrandado: 500px en PC, 340px en mobile (efecto specular de cursor sigue activo)
-- Cloudflare Pages conectado — URL live: `https://skapefromthebronx.pages.dev`
-- Conflicto de ramas resuelto: local `master` renombrada a `main`; `git push` va directo a `main` (la rama que Cloudflare monitorea para auto-deploy)
+**Qué se hizo en las últimas sesiones:**
+- **Carrusel de productos**: se eliminó el grid con filtros y se reemplazó por un carrusel deslizable con flechas ← → , dots de navegación, swipe táctil en móvil y responsive (3 cards PC / 2 tablet / 1 móvil)
+- **Solo 2 categorías reales**: `calzado` y `sombreros` — 6 productos en total con fotos reales
+- **Fotos reales integradas**: subcarpetas `img/Calzados/` y `img/Sombreros/` — cada producto tiene su `img:` en PRODUCTS
+- **Logo movido** a `img/Logo_Web/Logo-Skape.png` — actualizado en favicon, nav, hero, footer, OG tags y JSON-LD
+- **Lightbox de imágenes**: clic en la foto de un producto abre vista a pantalla completa con zoom (+/- botones, rueda del mouse, clic para alternar 1×/2×), navegación entre productos (flechas, teclado, swipe), se cierra con X o Escape
+- **Ícono lupa** aparece en hover sobre cada imagen del carrusel
+- **Toast de notificación**: aparece 6 segundos cada vez que se agrega un producto al carrito (primera vez y re-agregados), con icono del producto + nombre + "Agregado al carrito"
+- **Carrito mejorado**:
+  - Botón papelera en cada ítem → pide confirmación vía modal antes de eliminar
+  - Modal "Ya en carrito" cuando se intenta agregar un producto que ya existe
+  - Modal "¿Eliminar del carrito?" cuando se presiona la papelera
+  - Botón "Vaciar" en el encabezado del drawer (solo visible cuando hay ítems)
+  - Animación shake en el ícono del carrito al agregar productos
+- **WhatsApp real**: `584125385086` — botón flotante y footer preguntan disponibilidad; checkout del carrito manda pedido completo
+- **Todos los links externos** (WhatsApp float, WhatsApp footer, Instagram, TikTok) abren en `target="_blank"`
 
 **Qué falta por hacer:**
-- Agregar número real de WhatsApp en `js/skape-from-the-bronx.js` → `const WHATSAPP = "0000000000"`
-- Agregar links reales de Instagram y TikTok en el footer de `index.html`
-- Subir fotos reales de productos a `img/` y referenciarlas en PRODUCTS
+- Agregar links reales de Instagram y TikTok en el footer de `index.html` (actualmente `href="#"`)
 - (Opcional) Dominio personalizado en Cloudflare Pages
 
 **Próximo paso acordado:**
-Contenido real: número de WhatsApp, fotos de productos, links de redes sociales.
+Agregar links reales de Instagram y TikTok cuando el cliente los tenga listos.
 
 ---
 
@@ -58,23 +62,36 @@ skape-from-the-bronx/
 ├── css/
 │   └── skape-from-the-bronx.css — Todo el CSS + variables CSS + breakpoints
 ├── js/
-│   └── skape-from-the-bronx.js  — PRODUCTS array, carrito, lógica
+│   └── skape-from-the-bronx.js  — PRODUCTS array, carrito, lightbox, lógica
 ├── img/
-│   └── Logo-Skape.png            — Logo real (favicon + nav + hero + footer)
+│   ├── Logo_Web/
+│   │   └── Logo-Skape.png        — Logo real (favicon + nav + hero + footer)
+│   ├── Calzados/
+│   │   ├── Calzado 1.png
+│   │   ├── Calzado 2.png
+│   │   └── Calzado 3.png
+│   └── Sombreros/
+│       ├── Sombrero 1.png
+│       ├── Sombrero 2.png
+│       └── Sombrero 3.png
 ├── .claude/
 │   └── settings.json             — Hooks de palabras clave (continuemos / actualiza)
 ├── .gitignore
+├── README.md
 └── CLAUDE.md                     — Este archivo
 ```
 
 **Secciones en index.html:**
 - `<header class="nav">` — sticky, blur backdrop, menú móvil
 - `<section class="hero">` — logo real con efecto specular de cursor (luz que sigue el mouse)
-- `<section id="catalogo">` — grid filtrable de productos
+- `<section id="catalogo">` — carrusel de productos con flechas y dots
 - `<section id="marca">` — pillares de la marca (4 bloques)
 - `<footer id="contacto">` — links sociales, horario
-- `.wa-float` — botón flotante WhatsApp
+- `.wa-float` — botón flotante WhatsApp (abre en nueva pestaña)
 - `<aside id="cart">` — drawer carrito (slide desde la derecha)
+- `#lbOverlay` — lightbox pantalla completa con zoom
+- `#modalOverlay` — modal de confirmación (re-agregar / eliminar del carrito)
+- `#toastWrap` — contenedor de notificaciones toast
 
 ## Paleta de colores (variables CSS)
 
@@ -99,71 +116,108 @@ skape-from-the-bronx/
 
 ## Secciones principales (IDs)
 
-- `#catalogo` — grid de productos
+- `#catalogo` — sección del carrusel
+- `#carouselTrack` — track deslizable del carrusel (cards inyectadas por JS)
+- `#carouselDots` — dots de navegación del carrusel
+- `#prevBtn` / `#nextBtn` — flechas del carrusel
 - `#marca` — about the brand
 - `#contacto` — footer / contacto
 - `#cart` — drawer carrito (aside)
-- `#grid` — donde se renderizan las tarjetas de productos
-- `#filters` — botones de filtro de categoría
+- `#lbOverlay` — lightbox pantalla completa
+- `#modalOverlay` — modal confirmación (re-agregar / eliminar)
+- `#toastWrap` — contenedor de toasts
 
 ## Configuración editable (en `js/skape-from-the-bronx.js`)
 
 ### Número de WhatsApp
 ```js
-const WHATSAPP = "0000000000"; // ⚠️ PENDIENTE reemplazar con número real
+const WHATSAPP = "584125385086"; // Venezuela +58 0412-5385086
 ```
 Formato: código de país + número, sin signos. Ej: Venezuela `584121234567`, Colombia `573001234567`.
 
 ### Catálogo de productos (array PRODUCTS)
 ```js
 const PRODUCTS = [
-  { id:"...", name:"...", cat:"calzado|ropa|accesorios", price:45, tag:"descripción corta", icon:"slide|sneaker|hoodie|tee|shorts|cap|beanie|socks|tote", accent:"#hexcolor" },
-  // Para foto real agregar: img:"URL_o_data_URI_base64"
+  {
+    id:     "slide-concourse",
+    name:   "Concourse Slide",
+    cat:    "calzado",        // "calzado" | "sombreros"
+    price:  45,
+    tag:    "Para después del juego",
+    icon:   "slide",          // fallback SVG si no hay img
+    accent: "#c47a45",
+    img:    "img/Calzados/Calzado 1.png"  // ruta relativa a la foto real
+  },
 ];
 ```
 
-### Productos actuales (11 ítems)
-| ID                  | Nombre                      | Cat         | Precio |
-|---------------------|-----------------------------|-------------|--------|
-| slide-concourse     | Concourse Slide             | calzado     | $45    |
-| low-grand           | Grand Court Low             | calzado     | $89    |
-| bridge-runner       | Bridge Runner               | calzado     | $95    |
-| hoodie-bronx        | Bronx Heavyweight Hoodie    | ropa        | $65    |
-| crew-161            | 161st St. Crewneck          | ropa        | $58    |
-| tee-court           | Court Culture Tee           | ropa        | $32    |
-| shorts-concourse    | Concourse Shorts            | ropa        | $40    |
-| cap-snap            | Skape Snapback              | accesorios  | $28    |
-| beanie-chrome       | Chrome Monogram Beanie      | accesorios  | $24    |
-| socks-court         | Court Socks (3 pares)       | accesorios  | $18    |
-| tote-bronx          | Bronx Tote                  | accesorios  | $22    |
+### Productos actuales (6 ítems)
+| ID              | Nombre                  | Cat        | Precio | Imagen                        |
+|-----------------|-------------------------|------------|--------|-------------------------------|
+| slide-concourse | Concourse Slide         | calzado    | $45    | img/Calzados/Calzado 1.png    |
+| low-grand       | Grand Court Low         | calzado    | $89    | img/Calzados/Calzado 2.png    |
+| bridge-runner   | Bridge Runner           | calzado    | $95    | img/Calzados/Calzado 3.png    |
+| cap-snap        | Skape Snapback          | sombreros  | $28    | img/Sombreros/Sombrero 1.png  |
+| beanie-chrome   | Chrome Monogram Beanie  | sombreros  | $24    | img/Sombreros/Sombrero 2.png  |
+| bucket-skape    | Skape Bucket Hat        | sombreros  | $30    | img/Sombreros/Sombrero 3.png  |
 
 ## Funciones JS clave (en `js/skape-from-the-bronx.js`)
 
-| Función            | Qué hace                                              |
-|--------------------|-------------------------------------------------------|
-| `renderGrid()`     | Renderiza las cards según el filtro activo            |
-| `addToCart(id)`    | Agrega ítem al carrito (objeto en memoria)            |
-| `setQty(id, d)`    | Cambia cantidad (+1 / -1) en el carrito               |
-| `syncCart()`       | Actualiza el badge del contador en el nav             |
-| `renderCart()`     | Re-renderiza el drawer del carrito                    |
-| `checkout()`       | Construye mensaje y abre WhatsApp con el pedido       |
-| `iconSVG(type)`    | Devuelve SVG line-art del producto por tipo de icono  |
-| `observeReveals()` | IntersectionObserver para animaciones de entrada      |
-| `initSpecular()`   | Efecto de luz que sigue al cursor sobre el logo hero  |
-| `emblemSVG()`      | ~~SVG del emblema~~ — función obsoleta, ya no se llama |
+| Función              | Qué hace                                                        |
+|----------------------|-----------------------------------------------------------------|
+| `renderCarousel()`   | Renderiza todas las cards en el carrusel                        |
+| `moveCarousel()`     | Mueve el track y actualiza flechas/dots según carIdx            |
+| `renderDots()`       | Genera los puntos de navegación del carrusel                    |
+| `openLightbox(id)`   | Abre el lightbox con la imagen del producto indicado            |
+| `closeLightbox()`    | Cierra el lightbox                                              |
+| `lbUpdate()`         | Actualiza imagen, título, zoom y estados del lightbox           |
+| `lbSetZoom(scale)`   | Aplica zoom (1× – 3×) con step 0.5                             |
+| `lbNav(dir)`         | Navega al producto anterior (-1) o siguiente (+1) en lightbox   |
+| `showToast(id)`      | Muestra notificación "Agregado al carrito" durante 6 segundos   |
+| `closeToast(t)`      | Cierra y elimina un toast del DOM                               |
+| `showModal(id, mode)`| Abre modal: mode "add" (re-agregar) o "del" (eliminar)          |
+| `hideModal()`        | Cierra el modal de confirmación                                 |
+| `addToCart(id)`      | Si ya existe en carrito → showModal("add"); si no → doAddToCart |
+| `doAddToCart(id)`    | Agrega al carrito, actualiza badge, shake, muestra toast        |
+| `removeFromCart(id)` | Pide confirmación vía modal antes de eliminar                   |
+| `doRemoveFromCart(id)`| Elimina definitivamente del carrito                            |
+| `clearCart()`        | Vacía el carrito completo                                       |
+| `setQty(id, d)`      | Cambia cantidad (+1 / -1) en el carrito                         |
+| `syncCart()`         | Actualiza badge contador y visibilidad del botón "Vaciar"       |
+| `renderCart()`       | Re-renderiza el drawer del carrito                              |
+| `checkout()`         | Construye mensaje y abre WhatsApp con el pedido en nueva pestaña|
+| `cartBtnShake()`     | Animación shake en el ícono del carrito al agregar              |
+| `iconSVG(type)`      | Devuelve SVG line-art del producto (fallback sin foto)          |
+| `mediaInner(p)`      | Devuelve HTML de la imagen o icono SVG del producto             |
+| `observeReveals()`   | IntersectionObserver para animaciones de entrada por scroll     |
+| `initSpecular()`     | Efecto de luz que sigue al cursor sobre el logo hero            |
 
 ## Carrito — comportamiento
 
 - Estado en memoria: objeto `cart = { id: qty }` — se pierde al recargar la página
-- El checkout abre `wa.me/{WHATSAPP}?text=...` con el pedido formateado
+- Agregar producto ya existente → modal de confirmación "¿Agregar una más?"
+- Papelera → modal de confirmación "¿Eliminar del carrito?"
+- "Vaciar" en el encabezado → limpia todo el carrito
+- Animación shake en el botón del carrito al agregar cualquier ítem
+- Toast de 6 segundos confirma cada adición
+- El checkout abre `wa.me/584125385086?text=...` en nueva pestaña con el pedido formateado
 - No hay backend ni persistencia
+
+## Lightbox — comportamiento
+
+- Se abre al hacer clic en la imagen del producto (ícono lupa aparece en hover)
+- Zoom: botones +/−, rueda del mouse (PC), clic en imagen (alterna 1× ↔ 2×)
+- Rango de zoom: 1× (100%) a 3× (300%), paso 0.5×
+- Navegación entre productos: flechas laterales, teclas ← →, swipe en móvil
+- Teclas adicionales: + / − para zoom, 0 para resetear zoom, Escape para cerrar
+- Se cierra con el botón X o Escape
 
 ## Logo
 
-- Logo real: `img/Logo-Skape.png` — `<img>` en nav, hero y footer
-- Tamaño en hero: 500px en PC (880px+), 340px en mobile
-- Efecto specular (luz que sigue el cursor) sigue activo sobre el logo en el hero
-- Para cambiar el logo: reemplazar `img/Logo-Skape.png` con el nuevo archivo (mismo nombre)
+- Logo real: `img/Logo_Web/Logo-Skape.png` — `<img>` en nav, hero y footer
+- Tamaño en hero: ~720px en PC (880px+), ~340px en mobile
+- Efecto specular (luz que sigue el cursor) activo sobre el logo en el hero
+- Para cambiar el logo: reemplazar `img/Logo_Web/Logo-Skape.png` con el nuevo archivo (mismo nombre)
 
 ## SEO / Open Graph
 
@@ -172,35 +226,37 @@ Etiquetas en el `<head>` de `index.html`:
 - `twitter:card`, `twitter:image` — para Twitter/X
 - JSON-LD `ClothingStore` — para Google
 - URL base: `https://skapefromthebronx.pages.dev`
-- Imagen OG: `https://skapefromthebronx.pages.dev/img/Logo-Skape.png`
+- Imagen OG: `https://skapefromthebronx.pages.dev/img/Logo_Web/Logo-Skape.png`
 
-## Añadir fotos reales a productos
+## Añadir o cambiar fotos de productos
 
-Agregar propiedad `img` al objeto en PRODUCTS:
+Modificar la propiedad `img` en el objeto correspondiente de PRODUCTS:
 ```js
-{ id:"hoodie-bronx", ..., img:"https://..." }
-// o base64:
-{ id:"hoodie-bronx", ..., img:"data:image/jpeg;base64,/9j/..." }
+{ id:"slide-concourse", ..., img:"img/Calzados/Calzado 1.png" }
+// También acepta URL externa o base64:
+{ id:"slide-concourse", ..., img:"https://ejemplo.com/foto.jpg" }
 ```
-La foto reemplaza automáticamente al icono SVG tanto en la card como en el carrito.
+La foto reemplaza automáticamente al icono SVG tanto en la card como en el carrito y el lightbox.
 
 ## Idioma
 
-Todo el contenido está en **español**. El sitio está orientado a mercado hispanohablante.
+Todo el contenido está en **español**. El sitio está orientado a mercado hispanohablante (Venezuela y región).
 
 ## Pendientes antes de lanzar
 
-1. Reemplazar `WHATSAPP = "0000000000"` con número real en `js/skape-from-the-bronx.js`
-2. Agregar links reales de Instagram y TikTok en el footer de `index.html`
-3. (Opcional) Agregar fotos reales de productos con `img:` en PRODUCTS
-4. (Opcional) Dominio personalizado en Cloudflare Pages
+1. Agregar links reales de **Instagram** y **TikTok** en el footer de `index.html` (actualmente `href="#"`)
+2. (Opcional) Dominio personalizado en Cloudflare Pages
 
 ## Notas de edición rápida
 
 - **Agregar producto**: añadir objeto al array `PRODUCTS` en `js/skape-from-the-bronx.js`
 - **Cambiar precio**: modificar `price:` en el objeto del producto
+- **Cambiar foto de producto**: modificar `img:` en el objeto del producto
+- **Cambiar nombre/descripción de producto**: modificar `name:` y `tag:` en el objeto
 - **Cambiar texto hero**: buscar `<h1>` en la sección `.hero` de `index.html`
 - **Cambiar descripción de marca**: buscar `<section class="brand-strip">` en `index.html`
 - **Cambiar horario**: buscar `Lun–Sáb` en el footer de `index.html`
 - **Cambiar moneda**: modificar `const CURRENCY = "$"` en `js/skape-from-the-bronx.js`
-- **Cambiar tamaño logo hero**: `.emblem-stage` en `css/skape-from-the-bronx.css` (mobile: `340px`, desktop 880px+: `500px`)
+- **Cambiar número WhatsApp**: modificar `const WHATSAPP = "..."` en `js/skape-from-the-bronx.js`
+- **Cambiar tamaño logo hero**: `.emblem-stage` en `css/skape-from-the-bronx.css`
+- **Agregar Instagram/TikTok**: buscar `aria-label="Instagram"` y `aria-label="TikTok"` en el footer de `index.html` y reemplazar `href="#"` con el link real
